@@ -1,7 +1,9 @@
+const User = require('../models/User');
+
 const resolvers = {
   Query: {
-    helloWorld: () => {
-      return 'Hello World!';
+    users: async () => {
+      return User.find();
     },
   },
 };
