@@ -22,10 +22,10 @@ db.once('open', async () => {
   // for loop to generate fake bookData
   for (let i = 0; i < 60; i++) {
     const randomAuthorsIndex = Math.floor(Math.random() * 5);
-    const authors = faker.name.findName(randomAuthorsIndex);
+    const authors = faker.name.findName();
     const description = faker.lorem.paragraphs();
-    const bookId = faker.random.number(6);
-    const image = faker.image.image();
+    const bookId = faker.random.number({ min: 100, max: 999 });
+    const image = faker.image.imageUrl();
     const link = faker.internet.url();
     const title = faker.company.catchPhrase();
     // user that saved the book.
