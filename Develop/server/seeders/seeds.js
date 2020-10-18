@@ -8,7 +8,7 @@ db.once('open', async () => {
   await User.deleteMany({});
   //------------------create user data-----------------//
   // create empty array to store fake userData
-  const userData = [];
+  let userData = [];
   // for loop to generate fake userData
   for (let i = 0; i < 20; i += 1) {
     const username = faker.internet.userName();
@@ -17,11 +17,10 @@ db.once('open', async () => {
     userData.push({ username, email, password });
   }
   // create users
-  const createdUsers = await User.collection.insertMany(userData);
+  let createdUsers = await User.collection.insertMany(userData);
   //------------------create book data-----------------//
   // for loop to generate fake bookData
   for (let i = 0; i < 60; i++) {
-    const randomAuthorsIndex = Math.floor(Math.random() * 5);
     const authors = faker.name.findName();
     const description = faker.lorem.paragraphs();
     const bookId = faker.random.number({ min: 100, max: 999 });
@@ -30,8 +29,7 @@ db.once('open', async () => {
     const title = faker.company.catchPhrase();
     // user that saved the book.
     const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
-    const { username, _id: userId } = createdUsers.ops[randomUserIndex];
-    // update User
+    const { _id: userId } = createdUsers.ops[randomUserIndex];
     await User.updateOne(
       { _id: userId },
       {
