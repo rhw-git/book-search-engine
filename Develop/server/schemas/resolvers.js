@@ -5,6 +5,9 @@ const resolvers = {
     users: async () => {
       return User.find();
     },
+    me: async (parent, { username }) => {
+      return await User.findOne({ username }).select('-__v -password');
+    },
   },
 };
 // export resolver
