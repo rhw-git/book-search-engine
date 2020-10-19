@@ -38,7 +38,7 @@ const typeDefs = gql`
       link: String
       title: String!
     ): User
-    removeBook(removeBookId: ID!): User
+    removeBook(bookId: String!): User
   }
 `;
 // export the typeDefs
