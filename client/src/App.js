@@ -10,7 +10,7 @@ import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 // connect to backend server's
 const client = new ApolloClient({
-  uri: 'http://localhost:3005/graphql',
+  uri: '/graphql',
 });
 
 function App() {
