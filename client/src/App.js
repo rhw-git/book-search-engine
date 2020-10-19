@@ -14,6 +14,14 @@ import Navbar from './components/Navbar';
 
 // connect to backend server's
 const client = new ApolloClient({
+  request: (operation) => {
+    const token = localStorage.getItem('id_token');
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    });
+  },
   uri: '/graphql',
 });
 
