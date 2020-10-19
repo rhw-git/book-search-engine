@@ -2,6 +2,7 @@ const User = require('../models/User');
 const { signToken } = require('../utils/auth');
 
 const { AuthenticationError } = require('apollo-server-express');
+const bookSchema = require('../models/Book');
 const resolvers = {
   Query: {
     users: async () => {
@@ -24,7 +25,7 @@ const resolvers = {
       return { user, token };
     },
     login: async (parent, { email, password }) => {
-      // create new User with inputs
+      // find user with {email}
       const user = await User.findOne({ email });
       // check the to see whether this user exist
       if (!user) {
@@ -58,6 +59,18 @@ const resolvers = {
         return updateUser;
       }
       throw new AuthenticationError('You need to be logged in!');
+    },
+    removeBook: async (parent, { removeBookId }, context) => {
+      if (context.user) {
+        const updateUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $pull: { savedBooks: { _id: removeBookId } },
+          },
+          { new: true, runValidators: true },
+        );
+        return updateUser;
+      }
     },
   },
 };
