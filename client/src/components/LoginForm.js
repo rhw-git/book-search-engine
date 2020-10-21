@@ -57,7 +57,9 @@ const LoginForm = () => {
           show={showAlert}
           variant="danger"
         >
-          Something went wrong with your login credentials!
+          {error && (
+            <div>Something went wrong with your login credentials!</div>
+          )}
         </Alert>
         <Form.Group>
           <Form.Label htmlFor="email">Email</Form.Label>
