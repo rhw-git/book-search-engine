@@ -23,7 +23,6 @@ const SearchBooks = ({ bookId }) => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   //   create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
-
   //   create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
@@ -65,23 +64,18 @@ const SearchBooks = ({ bookId }) => {
     }
   };
 
-  const [saveBook, { error }] = useMutation(SAVE_BOOK, {
-    update(cache, { data: { saveBook } }) {
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, savedBooks: [...me.savedBooks, saveBook] } },
-      });
-    },
-  });
+  const [saveBook, { error }] = useMutation(SAVE_BOOK);
+
   // create function to handle saving a book to our database
-  const handleSaveBook = async () => {
+  const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    // console.log(bookToSave.bookId);
+    const { authors, description, image, title } = bookToSave;
     try {
       // add savedbook to database
       await saveBook({
-        variables: { bookId },
+        variables: { authors, description, bookId, image, title },
       });
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
