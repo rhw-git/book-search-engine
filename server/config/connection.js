@@ -5,7 +5,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false,
+    useFindAndModify: true,
   })
   .catch((err) => console.log(err));
 
