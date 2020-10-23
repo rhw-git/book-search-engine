@@ -23,7 +23,7 @@ Made with ❤️ by Ruohan Wang
 
 ## License
 
-ISC
+MIT
 
 ## Badges
 
