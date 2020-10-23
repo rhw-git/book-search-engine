@@ -15,7 +15,7 @@ This is a fully functioning Google Books API search engine built with a RESTful 
 
 ## Screenshot
 
-![](public/assets/screenshot.png)
+![](client/src/assets/screenshot.png)
 
 ## Contribution
 
