@@ -65,52 +65,52 @@ const SearchBooks = ({ bookId }) => {
     }
   };
 
-    const [saveBook, { error }] = useMutation(SAVE_BOOK, {
-      update(cache, { data: { saveBook } }) {
-        const { me } = cache.readQuery({ query: QUERY_ME });
-        cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: { ...me, savedBooks: [...me.savedBooks, saveBook] } },
-        });
-      },
-    });
-    create function to handle saving a book to our database
-    const handleSaveBook = async () => {
-      find the book in `searchedBooks` state by the matching id
-      const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-      try {
-        add savedbook to database
-        await saveBook({
-          variables: { bookId },
-        });
-        if book successfully saves to user's account, save book id to state
-        setSavedBookIds([...savedBookIds, bookToSave.bookId]);
-      } catch (e) {
-        console.log(e);
-      }
+  const [saveBook, { error }] = useMutation(SAVE_BOOK, {
+    update(cache, { data: { saveBook } }) {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, savedBooks: [...me.savedBooks, saveBook] } },
+      });
+    },
+  });
+  // create function to handle saving a book to our database
+  const handleSaveBook = async () => {
+    // find the book in `searchedBooks` state by the matching id
+    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    try {
+      // add savedbook to database
+      await saveBook({
+        variables: { bookId },
+      });
+      // if book successfully saves to user's account, save book id to state
+      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+    } catch (e) {
+      console.log(e);
+    }
 
-  //     // find the book in `searchedBooks` state by the matching id
-  //     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-  //     // get token
-  //     const token = Auth.loggedIn() ? Auth.getToken() : null;
+    //     // find the book in `searchedBooks` state by the matching id
+    //     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    //     // get token
+    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-  //     if (!token) {
-  //       return false;
-  //     }
+    //     if (!token) {
+    //       return false;
+    //     }
 
-  //     try {
-  //       const response = await saveBook(bookToSave, token);
+    //     try {
+    //       const response = await saveBook(bookToSave, token);
 
-  //       if (!response.ok) {
-  //         throw new Error('something went wrong!');
-  //       }
-  //       // if book successfully saves to user's account, save book id to state
-  //       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-
+    //       if (!response.ok) {
+    //         throw new Error('something went wrong!');
+    //       }
+    //       // if book successfully saves to user's account, save book id to state
+    //       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+    //     } catch (err) {
+    //       console.error(err);
+    //     }
+    //   };
+  };
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
