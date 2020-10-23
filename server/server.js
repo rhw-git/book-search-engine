@@ -30,7 +30,8 @@ app.use(routes);
 //-------------------------------- Serve up static assets -----------------------------------//
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+  // app.use(express.static(path.join(__dirname, '../client/build')));
+  app.use('/static', express.static(path.join(__dirname, '../client/build')));
 }
 // created was a wildcard GET route for the server
 app.get('*', (req, res) => {
